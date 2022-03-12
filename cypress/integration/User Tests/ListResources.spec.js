@@ -1,23 +1,23 @@
 /// <reference types = 'Cypress' />
 
-describe('List User Details', ()=> {
-    let getUrl = '/users'
-    context('When I send the GET /users request with id', () => {
-        it('Then it should get the single user details', () => {
+describe('List Resources Details', ()=> {
+    let getUrl = '/unknown'
+    context('When I send the GET /unknown request with id', () => {
+        it('Then it should get the single resource details', () => {
             cy.request({
                 method : 'GET',
                 url    : getUrl+'/2'
             }).then((response) => {
                 expect(response.status).to.eq(200)
-                expect(response.body.data).to.have.all.keys('id','email','first_name','last_name','avatar')
+                expect(response.body.data).to.have.all.keys('id','name','year','color','pantone_value')
                 expect(response.body.data.id).to.eq(2)
-                expect(response.body.data.first_name).to.eq("Janet")
+                expect(response.body.data.name).to.eq("fuchsia rose")
             })
         })
     })
 
-    context('When I send the GET /users request with invalid id', () => {
-        it('Then it should get the user not found error', () => {
+    context('When I send the GET /unknown request with invalid id', () => {
+        it('Then it should get the resource not found error', () => {
             cy.request({
                 method : 'GET',
                 url    : getUrl+'/23',
@@ -29,8 +29,8 @@ describe('List User Details', ()=> {
         })
     })
 
-    context('When I send the GET /users request',()=> {
-        it.only('Then it should get all the users details', () => {
+    context('When I send the GET /unknown request',()=> {
+        it('Then it should get all the resources details', () => {
             cy.request({
                 method : 'GET',
                 url    : getUrl
@@ -50,9 +50,11 @@ describe('List User Details', ()=> {
                             expect(response.body.per_page).to.eq(response.body.data.length)
                             Cypress._.each(response.body.data, (user) => {
                                 expect(user.id).to.not.be.null
-                                expect(user.first_name).to.not.be.null
-                                expect(user.email).to.be.not.null
-                                expect(user).to.have.all.keys('id','email','first_name','last_name','avatar')
+                                expect(user.name).to.not.be.null
+                                expect(user.year).to.be.not.null
+                                expect(user.color).to.be.not.null
+                                expect(user.pantone_value).to.be.not.null
+                                expect(user).to.have.all.keys('id','name','year','color','pantone_value')
                             })
                         })
                     })  
