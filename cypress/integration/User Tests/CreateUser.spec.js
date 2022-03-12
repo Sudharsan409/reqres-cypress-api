@@ -10,15 +10,15 @@ describe('Create User api', () => {
                 }).then((response) => {
                     cy.createUserResponseComValidation(response)
                     expect(response.body).to.have.all.keys('name','job','id','createdAt')
-                    expect(response.body).has.property('name',payLoad.name)
-                    expect(response.body).has.property('job',payLoad.job)
+                    expect(response.body.name).to.eq(payLoad.name)
+                    expect(response.body.job).to.eq(payLoad.job)
                 })
             }) 
         })
     })
 
     context('When I send PUT /users with empty values', () => {
-        it.only('Then should create a new user with empty job value', ()=> {
+        it('Then should create a new user with empty job value', ()=> {
             cy.fixture('createUser').then((payLoad) => {
                 cy.createUserRequest(payLoad.name,'',() =>{
                 }).then((response) => {
@@ -40,7 +40,7 @@ describe('Create User api', () => {
                     }
                 }).then((response) => {
                     cy.createUserResponseComValidation(response)
-                    expect(response.body).has.property('name',payLoad.name)
+                    expect(response.body.name).to.eq(payLoad.name)
                     expect(response.body).to.have.all.keys('name','id','createdAt')
                 })
             })
