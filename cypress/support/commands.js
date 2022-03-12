@@ -33,7 +33,7 @@ Cypress.Commands.add('createUserRequest',(usrname,job) => {
             "job"  : job 
         }
     }).then((response) => {
-        return response
+        return cy.wrap(response)
     })
 })
 
