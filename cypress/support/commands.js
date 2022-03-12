@@ -37,6 +37,34 @@ Cypress.Commands.add('createUserRequest',(methodType,usrname,job) => {
     })
 })
 
+Cypress.Commands.add('registerRequest',(email,passwd) => {
+    cy.request({
+        method : 'POST',
+        url : 'register',
+        failOnStatusCode : false,
+        body : {
+            "email"     : email,
+            "password"  : passwd,
+        }
+    }).then((response) => {
+        return cy.wrap(response)
+    })
+})
+
+Cypress.Commands.add('loginRequest',(email,passwd) => {
+    cy.request({
+        method : 'POST',
+        url : 'login',
+        failOnStatusCode : false,
+        body : {
+            "email"     : email,
+            "password"  : passwd,
+        }
+    }).then((response) => {
+        return cy.wrap(response)
+    })
+})
+
 Cypress.Commands.add('createUserResponseComValidation', (response) => {
     expect(response.status).to.eq(201)
     expect(response.body.id).to.not.be.null
