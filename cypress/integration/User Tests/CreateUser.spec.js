@@ -6,13 +6,7 @@ describe('Create User api', () => {
     context('When I send PUT /users', () => {
         it('Then it should create a new user', () => {
             cy.fixture('createUser').then((payLoad) => {
-                cy.request({
-                    method : 'POST',
-                    url : createUrl,
-                    body : {
-                        "name" : payLoad.name,
-                        "job"  : payLoad.job
-                    }
+                cy.createUserRequest(payLoad.name,payLoad.job,() =>{
                 }).then((response) => {
                     cy.createUserResponseComValidation(response)
                     expect(response.body).to.have.all.keys('name','job','id','createdAt')
@@ -24,15 +18,9 @@ describe('Create User api', () => {
     })
 
     context('When I send PUT /users with empty values', () => {
-        it('Then should create a new user with empty job value', ()=> {
+        it.only('Then should create a new user with empty job value', ()=> {
             cy.fixture('createUser').then((payLoad) => {
-                cy.request({
-                    method : 'POST',
-                    url : createUrl,
-                    body : {
-                        "name" : payLoad.name,
-                        "job" : ""
-                    }
+                cy.createUserRequest(payLoad.name,'',() =>{
                 }).then((response) => {
                     cy.createUserResponseComValidation(response)
                     expect(response.body).has.property('name',payLoad.name)
