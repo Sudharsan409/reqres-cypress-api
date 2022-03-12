@@ -24,9 +24,9 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add('createUserRequest',(usrname,job) => {
+Cypress.Commands.add('createUserRequest',(methodType,usrname,job) => {
     cy.request({
-        method : 'POST',
+        method : methodType,
         url : 'user',
         body : {
             "name" : usrname,
